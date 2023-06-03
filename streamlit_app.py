@@ -31,27 +31,26 @@ input_container = st.container()
 colored_header(label='', description='', color_name='blue-30')
 response_container = st.container()
 
-# User input
-## Function for taking user provided prompt as input
 def get_text():
     input_text = st.text_input("You: ", "", key="input")
     return input_text
 
-## Applying the user input box
 with input_container:
     user_input = get_text()
 
+def get_auth_cookies():
+    cookies = {"auth_token": "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"}
+    return cookies
 
-# Response output
-## Function for taking user prompt as input followed by producing AI generated responses
+
 # I need gpt3.5 here
 def generate_response(prompt):
-    chatbot = hugchat.ChatBot()
+
+    auth_cookies = get_auth_cookies()  
+    chatbot = hugchat.ChatBot(cookies=auth_cookies)
     response = chatbot.chat(prompt)
     return response
 
-
-## Conditional display of AI generated responses as a function of user provided prompts
 with response_container:
     if user_input:
         response = generate_response(user_input)
